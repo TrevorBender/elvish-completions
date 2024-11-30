@@ -1,8 +1,8 @@
 use ./comp
 use re
 use str
-use github.com/muesli/elvish-libs/git
-use github.com/zzamboni/elvish-modules/util
+use github.com/TrevorBender/elvish-libs/git
+use github.com/TrevorBender/elvish-modules/util
 
 var completions = [&]
 
@@ -103,7 +103,7 @@ var git-completions = [
 
 fn init {
   set completions = [&]
-  -run-git help -a --no-verbose | eawk {|line @f| if (re:match '^  [a-z]' $line) { put $@f } } | each {|c|
+  -run-git help -a --no-verbose | re:awk {|line @f| if (re:match '^  [a-z]' $line) { put $@f } } | each {|c|
     var seq = [ $comp:files~ ... ]
     if (has-key $git-completions $c) {
       set seq = $git-completions[$c]
